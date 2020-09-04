@@ -1,25 +1,25 @@
 <template>
-  <div v-if="!loading">
     <div class="movie-card-container" :class="{'detail-active': detail}">
+      <div v-if="!loading">
       <div class="card bg-dark text-white movie-card"
            :class="{detail: isThereImg, 'detail-active': detail}">
         <router-link :to="`/movie/${this.movie.id}`" >
           <!-- {img(this.movie.poster_path, this.movie.title)} -->
-          <img
-            :src="`${this.image_url}/w780/${this.movie.poster_path}`"
-            :alt="this.movie.title">
+          <img v-show="movie.poster_path"
+            :src="`${image_url}/w780/${movie.poster_path}`"
+            :alt="movie.title">
           <div class="card-img-overlay">
               <h5 class="card-title movie-card-title" :class="{detail: isThereImg}" >
-                {{this.movie.title}}
+                {{movie.title}}
               </h5>
               <p class="card-text movie-card-text detail" >
-                {{this.movie.overview}}
+                {{movie.overview}}
               </p>
               <!-- {/* <span id="movie-year" class="card-text">
-                {this.movie.release_date ? this.movie.release_date.split("-")[0] : ""}
+                {movie.release_date ? movie.release_date.split("-")[0] : ""}
               </span> */} -->
               <span id="movie-rate">
-                {{this.movie.vote_average === 0 ? "N/A" : this.movie.vote_average}}
+                {{movie.vote_average === 0 ? "N/A" : movie.vote_average}}
               </span>
           </div>
         </router-link>
@@ -67,6 +67,10 @@ export default {
 <style scoped>
 img {
   width: 100%;
+}
+
+div {
+  height: inherit;
 }
 
 #movie-rate{

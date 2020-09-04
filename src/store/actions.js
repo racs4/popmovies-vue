@@ -8,4 +8,10 @@ export default {
       commit(types.SET_POP_MOVIES, { popMovies: res.data.results });
     }).catch((err) => console.error(err));
   },
+  setSelectedMovie({ commit }, movieId) {
+    axios.get(`/movie/${movieId}?append_to_response=videos,similar,recommendations`).then((res) => {
+      console.log(res);
+      commit(types.SET_SELECTED_MOVIE, { selectedMovie: res.data });
+    }).catch((err) => console.error(err));
+  },
 };
