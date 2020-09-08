@@ -26,16 +26,23 @@ body {
   color: white;
 }
 
-#nav {
-  padding: 30px;
+/* width */
+::-webkit-scrollbar {
+width: 10px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
 }
 </style>
