@@ -13,4 +13,8 @@ export default {
   [types.REQUESTING_DATA](state) {
     state.loading = true;
   },
+  [types.SET_SEARCH_RESULT](state, payload) {
+    state.searchResult = payload.searchResult;
+    state.loading = false;
+  },
 };

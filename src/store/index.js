@@ -11,9 +11,7 @@ export default new Vuex.Store({
     popMovies: [],
     loading: false,
     selectedMovie: undefined,
-    searchResult: [],
-    searchResultQtt: 0,
-    searchPageQtt: 0,
+    searchResult: undefined,
     error: false,
   },
   mutations: {
@@ -33,6 +31,9 @@ export default new Vuex.Store({
     },
     loading(state) {
       return state.loading;
+    },
+    searchResult(state) {
+      return state.searchResult;
     },
   },
 });
