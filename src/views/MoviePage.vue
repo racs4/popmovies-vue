@@ -1,6 +1,7 @@
 <template>
   <div class="movie-page" v-if="selectedMovie">
     <div class="container">
+
       <div class="row">
         <div class="col-lg-4 col-sm-12">
             <img v-if="selectedMovie.poster_path" class="card-img movie-img"
@@ -35,43 +36,52 @@
 
       </div>
   </div>
-   <div v-if="selectedMovie.videos.results.length" class="similar-movies mt-5">
-      <h1> A taste... </h1>
-      <div class="embed-responsive embed-responsive-16by9">
-          <iframe  :title="selectedMovie.title" class="embed-responsive-item" :src="`https://www.youtube.com/embed/${selectedMovie.videos.results[0].key}?rel=0`" allowFullScreen></iframe>
+
+  <Section v-if="selectedMovie.videos.results.length" title="A taste...">
+    <div class="embed-responsive embed-responsive-16by9">
+          <iframe
+            :title="selectedMovie.title" class="embed-responsive-item"
+            :src="`https://www.youtube.com/embed/${selectedMovie.videos.results[0].key}?rel=0`" allowFullScreen>
+          </iframe>
       </div>
+  </Section>
+
+  <Section v-if="selectedMovie.similar.results.length" title="Similar movies">
+    <div class="row scroller">
+      <CardMovie
+        class="col-lg-3 col-sm-3 col-6"
+        v-for="movie in selectedMovie.similar.results"
+        :key="movie.id"
+        detail
+        :movie="movie"
+      />
     </div>
+  </Section>
 
-    <div v-if="selectedMovie.similar.results.length"
-         class="similar-movies mt-5 mb-5">
-      <h1> Similar movies </h1>
-      <div class="row">
-
-          <div v-for="movie in selectedMovie.similar.results.slice(0,4)"
-               :key="movie.id" class="col-lg-3 col-sm-3 col-6 mt-5">
-              <CardMovie :movie="movie" :detail="true" />
-          </div>
-
-        </div>
+  <Section
+    v-if="selectedMovie.recommendations.results.length"
+    :title="`Because you watched ${selectedMovie.title}`"
+  >
+    <div class="row scroller">
+      <CardMovie
+        class="col-lg-3 col-sm-3 col-6"
+        v-for="movie in selectedMovie.recommendations.results"
+        :key="movie.id"
+        detail
+        :movie="movie"
+      />
     </div>
+  </Section>
 
-    <div v-if="selectedMovie.recommendations.results.length" class="similar-movies mt-5 mb-5">
-      <h1> Because you watched "{{selectedMovie.title}}" </h1>
-        <div class="row">
-          <div v-for="movie in selectedMovie.recommendations.results.slice(0,4)"
-              :key="movie.id" class="col-lg-3 col-sm-3 col-6 mt-5">
-            <CardMovie :movie="movie" :detail="true" />
-          </div>
-        </div>
-    </div>
   </div>
-  </div>
+</div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { IMAGE_URL } from '@/config';
 import CardMovie from '@/widgets/CardMovie.vue';
+import Section from '@/components/Section.vue';
 
 export default {
   computed: {
@@ -86,7 +96,7 @@ export default {
     },
   },
   components: {
-    CardMovie,
+    CardMovie, Section,
   },
   methods: {
     ...mapActions(['setSelectedMovie']),
@@ -120,5 +130,13 @@ export default {
     color: black;
     padding: 0 5px;
     font-weight: 700;
+}
+
+.scroller {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 30px 0;
 }
 </style>

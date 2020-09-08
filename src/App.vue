@@ -34,11 +34,12 @@ h1 {
 /* width */
 ::-webkit-scrollbar {
 width: 10px;
+height: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-background: #f1f1f1;
+background: #000000;
 }
 
 /* Handle */
