@@ -1,68 +1,7 @@
 <template>
   <main>
     <div v-if="this.popMovies.length" class="main-carousel">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active"
-      :style="{backgroundImage: `url(${this.image_url}/original${this.popMovies[0].poster_path})`}">
-              <div class="carousel-caption d-none d-md-block">
-                <h1 class="text-left"> {{this.popMovies[0].title}} </h1>
-                <p class="text-left" >
-                  {{ this.popMovies[0].overview }}
-                </p>
-              </div>
-          </div>
-          <div class="carousel-item"
-      :style="{backgroundImage: `url(${this.image_url}/original${this.popMovies[1].poster_path})`}">
-             <div class="carousel-caption d-none d-md-block">
-                <h1 class="text-left"> {{this.popMovies[1].title}} </h1>
-                <p class="text-left" >
-                  {{ this.popMovies[1].overview }}
-                </p>
-              </div>
-          </div>
-          <div class="carousel-item"
-    :style="{backgroundImage: `url(${this.image_url}/original${this.popMovies[2].poster_path})`}">>
-             <div class="carousel-caption d-none d-md-block">
-                <h1 class="text-left"> {{this.popMovies[2].title}} </h1>
-                <p class="text-left" >
-                  {{ this.popMovies[2].overview }}
-                </p>
-              </div>
-          </div>
-          <div class="carousel-item"
-    :style="{backgroundImage: `url(${this.image_url}/original${this.popMovies[3].poster_path})`}">>
-             <div class="carousel-caption d-none d-md-block">
-                <h1 class="text-left"> {{this.popMovies[3].title}} </h1>
-                <p class="text-left" >
-                  {{ this.popMovies[3].overview }}
-                </p>
-              </div>
-          </div>
-        </div>
-        <a
-          class="carousel-control-prev"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a
-          class="carousel-control-next"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
+      <Carousel :movies="popMovies.slice(0,3)" />
     </div>
 
     <div class="container">
@@ -109,6 +48,7 @@ import { IMAGE_URL } from '@/config';
 import CardMovie from '@/widgets/CardMovie.vue';
 import MovieSpotlight from '@/widgets/MovieSpotlight.vue';
 import Section from '@/components/Section.vue';
+import Carousel from '@/components/Carousel.vue';
 
 export default {
   name: 'Home',
@@ -122,7 +62,7 @@ export default {
     ...mapActions(['setPopMovies']),
   },
   components: {
-    CardMovie, MovieSpotlight, Section,
+    CardMovie, MovieSpotlight, Section, Carousel,
   },
   created() {
     this.setPopMovies();
