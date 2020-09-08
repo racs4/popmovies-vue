@@ -64,42 +64,40 @@
         </a>
       </div>
     </div>
-    <div class="content container">
-      <section>
-        <div class="mt-5">
-          <h1>Popular movies</h1>
-          <div class="row pt-5 pb-5">
-            <div v-for="movie in popMovies.slice(3,7)"
-                 :key="movie.id" class="col-lg-3 col-sm-6 col-6 mt-5">
-              <CardMovie :detail="true" :movie="movie" />
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section>
-        <div class="mt-5">
-          <h1 class="text-right">Success</h1>
-          <div class="row mt-5">
-            <div class="col-12">
-              <MovieSpotlight :movie="popMovies[7]" />
-            </div>
-          </div>
+    <div class="container">
+      <Section title="Popular Movies">
+        <div class="row">
+          <CardMovie
+            class="col-lg-3 col-sm-6 col-6"
+            v-for="movie in popMovies.slice(3,7)"
+            :key="movie.id"
+            detail
+            :movie="movie"
+          />
         </div>
-      </section>
+      </Section>
 
-      <section>
-        <div class="mt-5 mb-5">
-          <h1>See more...</h1>
-          <div class="row">
-            <div v-for="movie in popMovies.slice(8,20)" :key="movie.id"
-              class="col-lg-2 col-sm-3 col-6 mt-5">
-              <CardMovie :movie="movie"/>
-            </div>
+      <Section title="Success" title-right >
+        <div class="row">
+          <div class="col-12">
+            <MovieSpotlight :movie="popMovies[7]" />
           </div>
         </div>
-      </section>
+      </Section>
+
+      <Section title="See more...">
+        <div class="row">
+          <CardMovie
+            class="col-lg-2 col-sm-3 col-6 mt-5"
+            v-for="movie in popMovies.slice(8,20)"
+            :key="movie.id"
+            :movie="movie"
+          />
+        </div>
+      </Section>
     </div>
+
   </main>
 </template>
 
@@ -110,6 +108,7 @@ import { IMAGE_URL } from '@/config';
 
 import CardMovie from '@/widgets/CardMovie.vue';
 import MovieSpotlight from '@/widgets/MovieSpotlight.vue';
+import Section from '@/components/Section.vue';
 
 export default {
   name: 'Home',
@@ -123,7 +122,7 @@ export default {
     ...mapActions(['setPopMovies']),
   },
   components: {
-    CardMovie, MovieSpotlight,
+    CardMovie, MovieSpotlight, Section,
   },
   created() {
     this.setPopMovies();
@@ -132,11 +131,6 @@ export default {
 </script>
 
 <style>
-
-h1 {
-  color: white;
-  font-family: 'Pacifico', sans-serif;
-}
 
 .main-carousel {
   height: 100vh;
@@ -157,9 +151,5 @@ h1 {
 
 @keyframes posterShow {
     100% {background-position: center center;}
-}
-
-section {
-  margin-top: 10vh;
 }
 </style>

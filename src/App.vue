@@ -19,6 +19,11 @@ body {
   background-color: black;
 }
 
+h1 {
+  color: white;
+  font-family: 'Pacifico', sans-serif;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
