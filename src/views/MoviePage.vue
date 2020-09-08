@@ -38,12 +38,18 @@
   </div>
 
   <Section v-if="selectedMovie.videos.results.length" title="A taste...">
-    <div class="embed-responsive embed-responsive-16by9">
-          <iframe
-            :title="selectedMovie.title" class="embed-responsive-item"
-            :src="`https://www.youtube.com/embed/${selectedMovie.videos.results[0].key}?rel=0`" allowFullScreen>
-          </iframe>
+    <div class="row scroller">
+      <div
+        v-for="video in selectedMovie.videos.results"
+        :key="video.key"
+        class="embed-responsive embed-responsive-16by9 col-12 mr-5"
+      >
+        <iframe
+          :title="selectedMovie.title" class="embed-responsive-item"
+          :src="`https://www.youtube.com/embed/${video.key}?rel=0`" allowFullScreen>
+        </iframe>
       </div>
+    </div>
   </Section>
 
   <Section v-if="selectedMovie.similar.results.length" title="Similar movies">
@@ -84,6 +90,15 @@ import CardMovie from '@/widgets/CardMovie.vue';
 import Section from '@/components/Section.vue';
 
 export default {
+  components: {
+    CardMovie, Section,
+  },
+  methods: {
+    ...mapActions(['setSelectedMovie']),
+    conversor(number) {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
+    },
+  },
   computed: {
     ...mapGetters(['selectedMovie']),
     image_url() {
@@ -95,17 +110,16 @@ export default {
         : null;
     },
   },
-  components: {
-    CardMovie, Section,
-  },
-  methods: {
-    ...mapActions(['setSelectedMovie']),
-    conversor(number) {
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
-    },
-  },
   created() {
+    window.scroll(0, 0);
     this.setSelectedMovie(this.$route.params.id);
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.params.id !== from.params.id) {
+      this.setSelectedMovie(to.params.id);
+      window.scroll(0, 0);
+    }
+    next();
   },
 };
 </script>
