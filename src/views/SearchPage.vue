@@ -45,12 +45,9 @@ export default {
     ...mapGetters(['searchResult', 'loading']),
   },
   created() {
-    console.log(this.$route.params);
     this.setSearchResult({ query: this.$route.params.query, page: this.$route.params.page });
   },
   beforeRouteUpdate(to, from, next) {
-    console.log(this.$route.params);
-    console.log(to);
     this.setSearchResult({ query: to.params.query, page: to.params.page });
     next();
   },

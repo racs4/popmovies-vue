@@ -16,16 +16,13 @@ export default {
     commit(types.REQUESTING_DATA);
 
     axios.get(`/movie/${movieId}?append_to_response=videos,similar,recommendations`).then((res) => {
-      console.log(res);
       commit(types.SET_SELECTED_MOVIE, { selectedMovie: res.data });
     }).catch((err) => console.error(err));
   },
 
   setSearchResult({ commit }, { query, page }) {
     commit(types.REQUESTING_DATA);
-    console.log(page);
     axios.get(`/search/movie?query=${query}&page=${page}`).then((res) => {
-      console.log(res);
       commit(types.SET_SEARCH_RESULT, {
         searchResult: res.data,
       });

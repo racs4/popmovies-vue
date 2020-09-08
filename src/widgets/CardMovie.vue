@@ -24,6 +24,18 @@
           </div>
         </router-link>
       </div>
+      <span
+          class="movie-heart empty"
+          :class="{liked: liked}"
+          @click="setLiked">
+            <i class="fas fa-heart"></i>
+        </span>
+        <span
+          class="movie-heart solid"
+          :class="{liked: liked}"
+          @click="setLiked">
+            <i class="far fa-heart"></i>
+        </span>
     </div>
   </div>
 </template>
@@ -43,6 +55,11 @@ export default {
       default() { return {}; },
     },
   },
+  data() {
+    return {
+      liked: false,
+    };
+  },
   computed: {
     image_url() {
       return IMAGE_URL;
@@ -50,6 +67,28 @@ export default {
     isThereImg() {
       return this.movie.poster_path !== null;
     },
+  },
+  methods: {
+    setLiked() {
+      const result = localStorage.getItem(this.movie.id);
+      if (result === 'true') {
+        localStorage.setItem(this.movie.id, false);
+        this.liked = false;
+      } else {
+        localStorage.setItem(this.movie.id, true);
+        this.liked = true;
+      }
+    },
+    getLiked() {
+      const result = localStorage.getItem(this.movie.id);
+      if (result === undefined) {
+        return false;
+      }
+      return result === 'true';
+    },
+  },
+  created() {
+    this.liked = this.getLiked();
   },
 };
 </script>
