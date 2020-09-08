@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     popMovies: [],
-    fetching: false,
+    loading: false,
     selectedMovie: undefined,
     searchResult: [],
     searchResultQtt: 0,
@@ -30,6 +30,9 @@ export default new Vuex.Store({
     },
     selectedMovie(state) {
       return state.selectedMovie;
+    },
+    loading(state) {
+      return state.loading;
     },
   },
 });

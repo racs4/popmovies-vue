@@ -1,5 +1,6 @@
 <template>
-  <div class="movie-page" v-if="selectedMovie">
+<div>
+  <div class="movie-page" v-if="!loading">
     <div class="container">
 
       <div class="row">
@@ -26,60 +27,63 @@
           <p v-if="selectedMovie.genres">
             Genres: {{genres}}
           </p>
-          <!-- {{genres(selectedMovie.genres)}} -->
           <p v-if="selectedMovie.vote_average">
             Rating: <span class="movie-rate" > {{selectedMovie.vote_average}} </span>
           </p>
           <a v-if="selectedMovie.homepage" :href="selectedMovie.homepage" >
             <p> Official Website </p>
           </a>
+        </div>
 
       </div>
-  </div>
 
-  <Section v-if="selectedMovie.videos.results.length" title="A taste...">
-    <div class="row scroller">
-      <div
-        v-for="video in selectedMovie.videos.results"
-        :key="video.key"
-        class="embed-responsive embed-responsive-16by9 col-12 mr-5"
+      <Section v-if="trailers.length" title="A taste...">
+        <div class="row scroller">
+          <div
+            v-for="trailer in trailers"
+            :key="trailer.key"
+            class="embed-responsive embed-responsive-16by9 col-12 mr-5"
+          >
+            <iframe
+              :title="selectedMovie.title" class="embed-responsive-item"
+              :src="`https://www.youtube.com/embed/${trailer.key}?rel=0`" allowFullScreen>
+            </iframe>
+          </div>
+        </div>
+      </Section>
+
+      <Section v-if="selectedMovie.similar.results.length" title="Similar movies">
+        <div class="row scroller">
+          <CardMovie
+            class="col-lg-3 col-sm-3 col-6"
+            v-for="movie in selectedMovie.similar.results"
+            :key="movie.id"
+            detail
+            :movie="movie"
+          />
+        </div>
+      </Section>
+
+      <Section
+        v-if="selectedMovie.recommendations.results.length"
+        :title="`Because you watched ${selectedMovie.title}`"
       >
-        <iframe
-          :title="selectedMovie.title" class="embed-responsive-item"
-          :src="`https://www.youtube.com/embed/${video.key}?rel=0`" allowFullScreen>
-        </iframe>
-      </div>
-    </div>
-  </Section>
+        <div class="row scroller">
+          <CardMovie
+            class="col-lg-3 col-sm-3 col-6"
+            v-for="movie in selectedMovie.recommendations.results"
+            :key="movie.id"
+            detail
+            :movie="movie"
+          />
+        </div>
+      </Section>
 
-  <Section v-if="selectedMovie.similar.results.length" title="Similar movies">
-    <div class="row scroller">
-      <CardMovie
-        class="col-lg-3 col-sm-3 col-6"
-        v-for="movie in selectedMovie.similar.results"
-        :key="movie.id"
-        detail
-        :movie="movie"
-      />
     </div>
-  </Section>
-
-  <Section
-    v-if="selectedMovie.recommendations.results.length"
-    :title="`Because you watched ${selectedMovie.title}`"
-  >
-    <div class="row scroller">
-      <CardMovie
-        class="col-lg-3 col-sm-3 col-6"
-        v-for="movie in selectedMovie.recommendations.results"
-        :key="movie.id"
-        detail
-        :movie="movie"
-      />
-    </div>
-  </Section>
-
   </div>
+
+  <Loader v-else />
+
 </div>
 </template>
 
@@ -87,11 +91,12 @@
 import { mapActions, mapGetters } from 'vuex';
 import { IMAGE_URL } from '@/config';
 import CardMovie from '@/widgets/CardMovie.vue';
+import Loader from '@/widgets/Loader.vue';
 import Section from '@/components/Section.vue';
 
 export default {
   components: {
-    CardMovie, Section,
+    CardMovie, Section, Loader,
   },
   methods: {
     ...mapActions(['setSelectedMovie']),
@@ -100,7 +105,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['selectedMovie']),
+    ...mapGetters(['selectedMovie', 'loading']),
     image_url() {
       return IMAGE_URL;
     },
@@ -108,6 +113,9 @@ export default {
       return this.selectedMovie.genres
         ? this.selectedMovie.genres.map((obj) => `${obj.name}, `).reduce((a, b) => a + b, '').slice(0, -2)
         : null;
+    },
+    trailers() {
+      return this.selectedMovie.videos.results.filter((video) => video.type === 'Trailer');
     },
   },
   created() {
