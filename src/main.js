@@ -7,6 +7,11 @@ import './plugins/axios';
 
 Vue.config.productionTip = false;
 
+Vue.filter(
+  'dollarFormat',
+  (value) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value),
+);
+
 new Vue({
   router,
   store,

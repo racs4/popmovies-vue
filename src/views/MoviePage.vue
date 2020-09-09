@@ -16,10 +16,10 @@
             Release date: {{selectedMovie.release_date}}
           </p>
           <p v-if="selectedMovie.revenue">
-            Revenue: {{conversor(selectedMovie.revenue)}}
+            Revenue: {{selectedMovie.revenue | dollarFormat }}
           </p>
           <p v-if="selectedMovie.budget">
-            Budget: {{conversor(selectedMovie.budget)}}
+            Budget: {{selectedMovie.budget | dollarFormat }}
           </p>
           <p v-if="selectedMovie.status">
             Status: {{selectedMovie.status}}
@@ -100,9 +100,6 @@ export default {
   },
   methods: {
     ...mapActions(['setSelectedMovie']),
-    conversor(number) {
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
-    },
   },
   computed: {
     ...mapGetters(['selectedMovie', 'loading']),
