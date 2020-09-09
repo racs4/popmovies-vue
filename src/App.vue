@@ -43,7 +43,8 @@ height: 10px;
 
 /* Track */
 ::-webkit-scrollbar-track {
-background: #000000;
+background: rgba(255, 255, 255, 0.1);
+
 }
 
 /* Handle */

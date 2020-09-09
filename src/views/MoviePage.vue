@@ -155,5 +155,8 @@ export default {
   overflow-x: auto;
   overflow-y: hidden;
   padding: 30px 0;
+  scrollbar-color: #888 rgba(255, 255, 255, 0.1);
+  scrollbar-width: thin;
+
 }
 </style>

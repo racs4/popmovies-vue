@@ -2,7 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import MoviePage from '@/views/MoviePage.vue';
 import SearchPage from '@/views/SearchPage.vue';
-import Home from '../views/Home.vue';
+import NotFound from '@/views/NotFound.vue';
+import Home from '@/views/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,10 @@ const routes = [
     path: '/search/:query/:page',
     name: 'Search',
     component: SearchPage,
+  },
+  {
+    path: '*',
+    component: NotFound,
   },
 ];
 
