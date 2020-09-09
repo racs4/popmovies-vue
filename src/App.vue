@@ -24,6 +24,10 @@ h1 {
   font-family: 'Pacifico', sans-serif;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

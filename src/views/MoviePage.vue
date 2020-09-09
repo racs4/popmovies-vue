@@ -66,7 +66,7 @@
 
       <Section
         v-if="selectedMovie.recommendations.results.length"
-        :title="`Because you watched ${selectedMovie.title}`"
+        :title="`Because you searched '${selectedMovie.title}'`"
       >
         <div class="row scroller">
           <CardMovie

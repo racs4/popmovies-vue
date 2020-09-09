@@ -17,7 +17,9 @@
         :style="{backgroundImage: `url(${image_url}/original${movie.poster_path})`}"
       >
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-left"> {{movie.title}} </h1>
+            <router-link :to="{name: 'MoviePage', params: { id: movie.id }}">
+              <h1 class="text-left"> {{movie.title}} </h1>
+            </router-link>
             <p class="text-left" >
               {{ movie.overview }}
             </p>
