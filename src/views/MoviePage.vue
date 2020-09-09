@@ -116,13 +116,11 @@ export default {
     },
   },
   created() {
-    window.scroll(0, 0);
     this.setSelectedMovie(this.$route.params.id);
   },
   beforeRouteUpdate(to, from, next) {
     if (to.params.id !== from.params.id) {
       this.setSelectedMovie(to.params.id);
-      window.scroll(0, 0);
     }
     next();
   },
