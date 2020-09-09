@@ -4,12 +4,12 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-lg-4 col-sm-12">
+        <div class="col-lg-4 col-sm-12" v-if="isThereImg">
             <img v-if="selectedMovie.poster_path" class="card-img movie-img"
             :src="`${image_url}/w780${selectedMovie.poster_path}`"
             :alt="selectedMovie.title" />
         </div>
-        <div class="col-lg-8 col-sm-12">
+        <div class="col-sm-12" :class="{'col-lg-8': isThereImg, 'col-lg-12': !isThereImg}">
           <h1> {{selectedMovie.title}} </h1>
           <p> {{selectedMovie.overview}} </p>
           <p v-if="selectedMovie.release_date" >
@@ -114,6 +114,7 @@ export default {
     trailers() {
       return this.selectedMovie.videos.results.filter((video) => video.type === 'Trailer');
     },
+    isThereImg() { return this.selectedMovie.poster_path !== null; },
   },
   created() {
     this.setSelectedMovie(this.$route.params.id);
